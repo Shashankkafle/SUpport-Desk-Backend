@@ -13,14 +13,16 @@ const cors = require('cors');
 connectDB()
 
 const app=express()
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(errorHandler)
 
-app.get('/',(req,res)=>{
-    res.send('Hello')
-})
 
 app.use('/api/users',require('./routes/userRoutes'))
 app.use('/api/tickets', require('./routes/ticketRoutes'))
